@@ -3,13 +3,13 @@ pipeline {
     stages {
         stage('git拉取代码') {
             steps {
-				git  url: 'https://github.com/zmquan/dockerfile.git'
+		git  branch: 'main', url: 'https://github.com/zmquan/dockerfile.git'
             }
         }
 
         stage('生成自定义镜像') { 
            steps {
-                    sh '''docker build -t eryi-registry.cn-hangzhou.cr.aliyuncs.com/zmquan/nginx:latest .'''
+                sh '''docker build -t eryi-registry.cn-hangzhou.cr.aliyuncs.com/zmquan/nginx:latest .'''
                 }
         }
         
