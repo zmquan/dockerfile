@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('git拉取代码') {
+            steps {
+				git  url: 'https://github.com/zmquan/dockerfile.git'
+            }
+        }
+
+        stage('生成自定义镜像') { 
+           steps {
+                    sh '''docker build -t eryi-registry.cn-hangzhou.cr.aliyuncs.com/zmquan/nginx:latest .'''
+                }
+        }
+        
+        stage('上传自定义镜像到harbor') { 
+           steps {
+                    sh '''docker login -u zhengmingquan.zmq@1543428740671114 -p Aa123456 eryi-registry.cn-hangzhou.cr.aliyuncs.com
+                    docker push eryi-registry.cn-hangzhou.cr.aliyuncs.com/zmquan/nginx:latest'''
+                }
+        }
+    }
+}
